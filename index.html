@@ -688,6 +688,170 @@
         position: relative;
       }
 
+      /* ===== Botón Pagar ahora ===== */
+      .btn-pay {
+        background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+        color: #fff;
+        box-shadow: 0 10px 25px -8px rgba(30, 95, 217, 0.55);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-pay:hover {
+        filter: brightness(1.08);
+        box-shadow: 0 14px 32px -8px rgba(30, 95, 217, 0.75);
+      }
+      .btn-pay::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        box-shadow: 0 0 0 0 rgba(77, 140, 255, 0.55);
+        animation: payPulse 2.4s ease-out infinite;
+      }
+      @keyframes payPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(77, 140, 255, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 14px rgba(77, 140, 255, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(77, 140, 255, 0);
+        }
+      }
+      .card-actions .row3 {
+        margin-top: 2px;
+      }
+
+      /* ===== Modal método de pago ===== */
+      .pay-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 18px 0 6px;
+      }
+      .pay-option {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 18px;
+        border-radius: var(--radius-md);
+        border: 1.5px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          border-color 0.2s ease,
+          background 0.2s ease,
+          transform 0.2s ease;
+        color: var(--white);
+        font-family: inherit;
+      }
+      .pay-option:hover {
+        border-color: var(--blue-400);
+        background: rgba(77, 140, 255, 0.08);
+        transform: translateY(-2px);
+      }
+      .pay-option .ico {
+        font-size: 1.6rem;
+        flex-shrink: 0;
+      }
+      .pay-option strong {
+        display: block;
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+      }
+      .pay-option span {
+        font-size: 0.8rem;
+        color: var(--grey-500);
+      }
+      .pay-summary {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.04);
+        margin-bottom: 6px;
+      }
+      .pay-summary img {
+        width: 56px;
+        height: 56px;
+        border-radius: 10px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .pay-summary h4 {
+        font-size: 0.92rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .pay-secure {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        justify-content: center;
+        font-size: 0.72rem;
+        color: var(--grey-500);
+        margin-top: 14px;
+      }
+
+      /* ===== Modal datos de envío ===== */
+      .ship-form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 16px;
+      }
+      .ship-ok {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+        background: rgba(37, 211, 102, 0.12);
+        border: 1px solid rgba(37, 211, 102, 0.4);
+        font-size: 0.85rem;
+        margin-bottom: 4px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .field label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--grey-300);
+      }
+      .field input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1.5px solid rgba(255, 255, 255, 0.14);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        color: var(--white);
+        font-size: 0.92rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+      .field input:focus {
+        border-color: var(--blue-400);
+      }
+      .field-row {
+        display: flex;
+        gap: 12px;
+      }
+      .field-row .field {
+        flex: 1;
+      }
+      .ship-status {
+        font-size: 0.82rem;
+        text-align: center;
+        min-height: 18px;
+        color: var(--grey-300);
+      }
+
       /* ===== Why us ===== */
       .why-grid {
         display: grid;
@@ -1028,19 +1192,109 @@
               <span class="price-now" id="modalPrice"></span>
             </div>
             <ul id="modalFeatures"></ul>
-            <a
-              id="modalWhatsapp"
-              href="#"
-              target="_blank"
-              rel="noopener"
-              class="btn btn-whatsapp btn-block"
-              >Comprar por WhatsApp</a
-            >
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <button
+                id="modalPay"
+                class="btn btn-pay btn-block"
+                onclick="openPayModal(currentModalIndex)"
+              >
+                💳 Pagar ahora
+              </button>
+              <a
+                id="modalWhatsapp"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-whatsapp btn-block"
+                >Comprar por WhatsApp</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ===== Modal método de pago (Wompi) ===== -->
+    <div class="modal-overlay" id="payModalOverlay">
+      <div class="modal">
+        <div class="modal-inner">
+          <button class="modal-close" onclick="closePayModal()">✕</button>
+          <div class="modal-body">
+            <h3>Pagar ahora</h3>
+            <div class="pay-summary">
+              <img id="payImg" src="" alt="" />
+              <div>
+                <h4 id="payName"></h4>
+                <span class="price-now" id="payPrice"></span>
+              </div>
+            </div>
+            <div class="pay-options">
+              <button class="pay-option" onclick="startWompiCheckout()">
+                <span class="ico">🏦</span>
+                <span>
+                  <strong>Transferencia (PSE / Nequi / Bancolombia)</strong>
+                  <span>Paga desde tu cuenta bancaria en segundos</span>
+                </span>
+              </button>
+              <button class="pay-option" onclick="startWompiCheckout()">
+                <span class="ico">💳</span>
+                <span>
+                  <strong>Tarjeta débito / crédito</strong>
+                  <span>Visa, Mastercard, Amex — pago seguro con Wompi</span>
+                </span>
+              </button>
+            </div>
+            <div class="pay-secure">🔒 Pago protegido y procesado por Wompi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Modal datos de envío (post-pago) ===== -->
+    <div class="modal-overlay" id="shipModalOverlay">
+      <div class="modal">
+        <div class="modal-inner">
+          <button class="modal-close" onclick="closeShipModal()">✕</button>
+          <div class="modal-body">
+            <div class="ship-ok">✅ ¡Pago confirmado! Ya casi terminamos.</div>
+            <h3>Completa tus datos de envío</h3>
+            <p style="font-size: 0.85rem; color: var(--grey-300)">
+              Necesitamos estos datos para organizar tu pedido y el envío.
+            </p>
+            <form class="ship-form" id="shipForm" onsubmit="submitShipForm(event)">
+              <div class="field">
+                <label for="shipName">Nombre y Apellido</label>
+                <input type="text" id="shipName" required autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="shipPhone">Teléfono</label>
+                <input type="tel" id="shipPhone" required autocomplete="tel" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="shipDept">Departamento</label>
+                  <input type="text" id="shipDept" required />
+                </div>
+                <div class="field">
+                  <label for="shipCity">Ciudad</label>
+                  <input type="text" id="shipCity" required />
+                </div>
+              </div>
+              <div class="field">
+                <label for="shipAddress">Dirección completa y barrio</label>
+                <input type="text" id="shipAddress" required />
+              </div>
+              <button type="submit" class="btn btn-gold btn-block" id="shipSubmitBtn">
+                Confirmar pedido
+              </button>
+              <div class="ship-status" id="shipStatus"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://checkout.wompi.co/widget.js"></script>
     <script>
       /* =========================================================
    DATA DE PRODUCTOS
@@ -1077,7 +1331,7 @@
           name: "Lymphatic Drainage Drenaje Linfático",
           tag: "Nature's Sunshine · Apoyo linfático 59 ml",
           price: "$81.900",
-          oldPrice: null,
+          oldPrice: "$99.900",
           gift: null,
           images: [
             "images/DRENAJE LINFATICO/Drenaje Linfatico.png",
@@ -1124,7 +1378,7 @@
           name: "CAROTONE 300 ML + REGALO",
           tag: "Light & Natural · Fórmula 3 en 1",
           price: "$91.900",
-          oldPrice: null,
+          oldPrice: "$115.000",
           gift: "+ REGALO",
           images: [
             "images/CAROTONE/Carotone.png",
@@ -1187,6 +1441,9 @@
         <div class="row2">
           <button class="btn btn-outline btn-sm" onclick="openModal(${pIndex})">Más información</button>
           <a class="btn btn-whatsapp btn-sm" href="${buildWaLink(p)}" target="_blank" rel="noopener">Comprar</a>
+        </div>
+        <div class="row3">
+          <button class="btn btn-pay btn-sm btn-block" onclick="openPayModal(${pIndex})">💳 Pagar ahora</button>
         </div>
       </div>
     </div>
@@ -1251,8 +1508,10 @@
    MODAL "MÁS INFORMACIÓN"
 ========================================================= */
       const overlay = document.getElementById("modalOverlay");
+      let currentModalIndex = 0;
 
       function openModal(i) {
+        currentModalIndex = i;
         const p = products[i];
         document.getElementById("modalImg").src = p.images[0];
         document.getElementById("modalImg").alt = p.name;
@@ -1273,6 +1532,164 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeModal();
       });
+
+      /* =========================================================
+   PAGOS — WOMPI WIDGET
+   Solo se usa la LLAVE PÚBLICA en el navegador. La llave privada
+   y el secreto de integridad NUNCA deben ir en este archivo:
+   cualquiera que vea el código fuente podría robarlas.
+========================================================= */
+      const WOMPI_PUBLIC_KEY = "pub_prod_tSnbLt9Fn82EFNHc5V8dqMk1iRueILM8";
+
+      // Cambia esto por tu propia clave gratis de https://web3forms.com
+      // (se crea en 30 segundos con solo tu correo, sin tarjeta).
+      // Debes crearla usando zenvora662@gmail.com para que los pedidos
+      // lleguen a ese correo automáticamente.
+      const WEB3FORMS_ACCESS_KEY = "PEGA_AQUI_TU_ACCESS_KEY_DE_WEB3FORMS";
+      const NOTIFY_EMAIL = "zenvora662@gmail.com";
+
+      let payModalIndex = 0;
+      let lastOrder = null; // { product, reference, transactionId }
+
+      function priceToCents(priceStr) {
+        const digits = priceStr.replace(/[^\d]/g, "");
+        return parseInt(digits, 10) * 100;
+      }
+
+      function openPayModal(i) {
+        payModalIndex = i;
+        const p = products[i];
+        document.getElementById("payImg").src = p.images[0];
+        document.getElementById("payImg").alt = p.name;
+        document.getElementById("payName").textContent = p.name;
+        document.getElementById("payPrice").textContent = p.price;
+        document.getElementById("payModalOverlay").classList.add("open");
+      }
+      function closePayModal() {
+        document.getElementById("payModalOverlay").classList.remove("open");
+      }
+      document
+        .getElementById("payModalOverlay")
+        .addEventListener("click", (e) => {
+          if (e.target.id === "payModalOverlay") closePayModal();
+        });
+
+      function startWompiCheckout() {
+        const p = products[payModalIndex];
+        if (typeof WidgetCheckout === "undefined") {
+          alert(
+            "No se pudo cargar la pasarela de pago. Verifica tu conexión e intenta de nuevo.",
+          );
+          return;
+        }
+        const reference = `ZEN-${p.id}-${Date.now()}`;
+        const checkout = new WidgetCheckout({
+          currency: "COP",
+          amountInCents: priceToCents(p.price),
+          reference: reference,
+          publicKey: WOMPI_PUBLIC_KEY,
+        });
+        checkout.open(function (result) {
+          const tx = result && result.transaction;
+          if (tx && tx.status === "APPROVED") {
+            closePayModal();
+            lastOrder = {
+              product: p,
+              reference: reference,
+              transactionId: tx.id,
+            };
+            openShipModal();
+          } else if (tx && tx.status) {
+            alert(
+              `El pago no se completó (estado: ${tx.status}). Puedes intentarlo de nuevo.`,
+            );
+          }
+        });
+      }
+
+      /* =========================================================
+   DATOS DE ENVÍO — se envían por correo (Web3Forms) y se
+   guardan también en este navegador como respaldo local.
+========================================================= */
+      function openShipModal() {
+        document.getElementById("shipStatus").textContent = "";
+        document.getElementById("shipForm").reset();
+        document.getElementById("shipModalOverlay").classList.add("open");
+      }
+      function closeShipModal() {
+        document.getElementById("shipModalOverlay").classList.remove("open");
+      }
+      document
+        .getElementById("shipModalOverlay")
+        .addEventListener("click", (e) => {
+          if (e.target.id === "shipModalOverlay") closeShipModal();
+        });
+
+      function saveOrderLocally(order) {
+        try {
+          const key = "zenvora_pedidos";
+          const existing = JSON.parse(localStorage.getItem(key) || "[]");
+          existing.push(order);
+          localStorage.setItem(key, JSON.stringify(existing));
+        } catch (e) {
+          /* localStorage no disponible, seguimos sin bloquear el pedido */
+        }
+      }
+
+      async function submitShipForm(e) {
+        e.preventDefault();
+        const btn = document.getElementById("shipSubmitBtn");
+        const status = document.getElementById("shipStatus");
+        const order = {
+          fecha: new Date().toLocaleString("es-CO"),
+          producto: lastOrder ? lastOrder.product.name : "N/D",
+          precio: lastOrder ? lastOrder.product.price : "N/D",
+          referencia: lastOrder ? lastOrder.reference : "N/D",
+          transaccionWompi: lastOrder ? lastOrder.transactionId : "N/D",
+          nombre: document.getElementById("shipName").value,
+          telefono: document.getElementById("shipPhone").value,
+          departamento: document.getElementById("shipDept").value,
+          ciudad: document.getElementById("shipCity").value,
+          direccion: document.getElementById("shipAddress").value,
+        };
+
+        saveOrderLocally(order);
+
+        btn.disabled = true;
+        btn.textContent = "Enviando...";
+        status.textContent = "";
+
+        try {
+          const res = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_ACCESS_KEY,
+              subject: `🛒 Nuevo pedido Zenvora — ${order.producto}`,
+              from_name: "Zenvora — Pedidos",
+              ...order,
+            }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            status.textContent = "✅ ¡Pedido enviado! Te contactaremos pronto.";
+            setTimeout(closeShipModal, 2200);
+          } else {
+            throw new Error("web3forms error");
+          }
+        } catch (err) {
+          // Respaldo: abre el correo del cliente con el pedido ya redactado
+          const body = encodeURIComponent(
+            `Nuevo pedido Zenvora\n\nProducto: ${order.producto}\nPrecio: ${order.precio}\nReferencia: ${order.referencia}\nTransacción Wompi: ${order.transaccionWompi}\n\nNombre: ${order.nombre}\nTeléfono: ${order.telefono}\nDepartamento: ${order.departamento}\nCiudad: ${order.ciudad}\nDirección: ${order.direccion}`,
+          );
+          window.location.href = `mailto:${NOTIFY_EMAIL}?subject=${encodeURIComponent("Nuevo pedido Zenvora — " + order.producto)}&body=${body}`;
+          status.textContent =
+            "No se pudo enviar automáticamente. Se abrió tu correo para enviarlo manualmente.";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Confirmar pedido";
+        }
+      }
 
       /* =========================================================
    REVEAL ON SCROLL
