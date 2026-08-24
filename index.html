@@ -1244,7 +1244,9 @@
                 </span>
               </button>
             </div>
-            <div class="pay-secure">🔒 Pago protegido y procesado por Wompi</div>
+            <div class="pay-secure">
+              🔒 Pago protegido y procesado por Wompi
+            </div>
           </div>
         </div>
       </div>
@@ -1261,7 +1263,11 @@
             <p style="font-size: 0.85rem; color: var(--grey-300)">
               Necesitamos estos datos para organizar tu pedido y el envío.
             </p>
-            <form class="ship-form" id="shipForm" onsubmit="submitShipForm(event)">
+            <form
+              class="ship-form"
+              id="shipForm"
+              onsubmit="submitShipForm(event)"
+            >
               <div class="field">
                 <label for="shipName">Nombre y Apellido</label>
                 <input type="text" id="shipName" required autocomplete="name" />
@@ -1284,7 +1290,11 @@
                 <label for="shipAddress">Dirección completa y barrio</label>
                 <input type="text" id="shipAddress" required />
               </div>
-              <button type="submit" class="btn btn-gold btn-block" id="shipSubmitBtn">
+              <button
+                type="submit"
+                class="btn btn-gold btn-block"
+                id="shipSubmitBtn"
+              >
                 Confirmar pedido
               </button>
               <div class="ship-status" id="shipStatus"></div>
@@ -1541,11 +1551,7 @@
 ========================================================= */
       const WOMPI_PUBLIC_KEY = "pub_prod_tSnbLt9Fn82EFNHc5V8dqMk1iRueILM8";
 
-      // Cambia esto por tu propia clave gratis de https://web3forms.com
-      // (se crea en 30 segundos con solo tu correo, sin tarjeta).
-      // Debes crearla usando zenvora662@gmail.com para que los pedidos
-      // lleguen a ese correo automáticamente.
-      const WEB3FORMS_ACCESS_KEY = "PEGA_AQUI_TU_ACCESS_KEY_DE_WEB3FORMS";
+      const WEB3FORMS_ACCESS_KEY = "47629b76-4b08-455d-8d8a-4aaec0d428aa";
       const NOTIFY_EMAIL = "zenvora662@gmail.com";
 
       let payModalIndex = 0;
