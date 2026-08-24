@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zenvora — Todo lo que necesitas, en un solo lugar</title>
+    <link rel="icon" type="image/png" href="images/LOGO ZENVORA REDONDO.png" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="images/LOGO ZENVORA REDONDO.png"
+    />
+    <link rel="apple-touch-icon" href="images/LOGO ZENVORA REDONDO.png" />
     <style>
       :root {
         --navy-950: #050a17;
@@ -538,6 +545,90 @@
         padding: 5px 10px;
         border-radius: 999px;
         letter-spacing: 0.03em;
+      }
+      .badge-best {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 5;
+        background: linear-gradient(135deg, #ff5f5f, #d81f1f);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 800;
+        padding: 5px 10px;
+        border-radius: 999px;
+        letter-spacing: 0.03em;
+        box-shadow: 0 8px 18px -6px rgba(216, 31, 31, 0.65);
+        animation: bestGlow 1.8s ease-in-out infinite;
+      }
+      @keyframes bestGlow {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.06);
+        }
+      }
+      .unit-price {
+        font-size: 0.78rem;
+        color: var(--grey-500);
+        margin-top: -2px;
+      }
+      .qty-pills {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin: 6px 0 2px;
+      }
+      .qty-pill {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        padding: 9px 6px 8px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--white);
+        font-family: inherit;
+        cursor: pointer;
+        transition:
+          border-color 0.2s ease,
+          background 0.2s ease,
+          transform 0.15s ease;
+      }
+      .qty-pill:hover {
+        transform: translateY(-1px);
+        border-color: var(--blue-400);
+      }
+      .qty-pill.active {
+        border-color: var(--gold-400);
+        background: rgba(244, 180, 0, 0.1);
+        box-shadow: 0 0 0 1px var(--gold-400) inset;
+      }
+      .qty-pill-badge {
+        position: absolute;
+        top: -9px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--gold-400);
+        color: var(--navy-950);
+        font-size: 0.6rem;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .qty-pill-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .qty-pill-price {
+        font-size: 0.72rem;
+        color: var(--gold-400);
+        font-weight: 700;
       }
 
       .card-body {
@@ -1190,7 +1281,18 @@
             <h3 id="modalTitle"></h3>
             <div class="price-row">
               <span class="price-now" id="modalPrice"></span>
+              <span
+                class="price-old"
+                id="modalOldPrice"
+                style="display: none"
+              ></span>
             </div>
+            <div
+              class="unit-price"
+              id="modalUnitPrice"
+              style="display: none"
+            ></div>
+            <div id="modalPills"></div>
             <ul id="modalFeatures"></ul>
             <div style="display: flex; flex-direction: column; gap: 10px">
               <button
@@ -1313,15 +1415,63 @@
 
       const products = [
         {
+          id: "unas7days",
+          name: "7 DAYS TRATAMIENTO DE UÑAS DS2025-5",
+          tag: "Tratamiento reparador de uñas · 7 días",
+          bestSeller: true,
+          gift: null,
+          images: [
+            "images/TRATAMIENTO UNIAS/1.webp",
+            "images/TRATAMIENTO UNIAS/UNIAS 1.2.png",
+            "images/TRATAMIENTO UNIAS/UNIAS 2.png",
+            "images/TRATAMIENTO UNIAS/UNIAS 3.png",
+          ],
+          features: [
+            "Repara y fortalece uñas débiles, quebradizas o dañadas",
+            "Resultados visibles desde los primeros 7 días de uso",
+            "Fórmula de fácil aplicación, apta para uso diario",
+            "El tratamiento más pedido de nuestro catálogo",
+            "Envío a toda Colombia · Pago contraentrega o en línea",
+          ],
+          keyword: "UNAS7DAYS",
+          defaultVariantIdx: 1,
+          variants: [
+            { qty: 1, totalPrice: 59900, oldTotal: null, label: "1 unidad" },
+            {
+              qty: 2,
+              totalPrice: 69900,
+              oldTotal: 119800,
+              label: "2 unidades",
+              badge: "MÁS POPULAR",
+            },
+            {
+              qty: 4,
+              totalPrice: 109900,
+              oldTotal: 239600,
+              label: "4 unidades",
+              badge: "MAYOR AHORRO",
+            },
+          ],
+        },
+        {
           id: "sebo",
           name: "SEBO DE RES EVIL GOODS 60 ML + REGALO",
           tag: "Bálsamo de sebo de res con miel",
-          price: "$78.900",
-          oldPrice: "$99.900",
           gift: "+ REGALO",
+          defaultVariantIdx: 0,
+          variants: [
+            { qty: 1, totalPrice: 69900, oldTotal: null, label: "1 unidad" },
+            {
+              qty: 2,
+              totalPrice: 129900,
+              oldTotal: 139800,
+              label: "2 unidades",
+              badge: "AHORRA $9.900",
+            },
+          ],
           images: [
             "images/SEBO DE RES/Sebo de res.jpeg",
-            "images/SEBO DE RES/IMAGEN 1 SEBO DE RES.png",
+            "images/SEBO DE RES/IMAGEN 1.1 SEBO DE RES.png",
             "images/SEBO DE RES/IMAGEN 2 SEBO DE RES.png",
             "images/SEBO DE RES/IMAGEN 3 SEBO DE RES.png",
           ],
@@ -1340,14 +1490,23 @@
           id: "linfatico",
           name: "Lymphatic Drainage Drenaje Linfático",
           tag: "Nature's Sunshine · Apoyo linfático 59 ml",
-          price: "$81.900",
-          oldPrice: "$99.900",
           gift: null,
+          defaultVariantIdx: 0,
+          variants: [
+            { qty: 1, totalPrice: 69900, oldTotal: null, label: "1 unidad" },
+            {
+              qty: 2,
+              totalPrice: 129900,
+              oldTotal: 139800,
+              label: "2 unidades",
+              badge: "AHORRA $10.000",
+            },
+          ],
           images: [
             "images/DRENAJE LINFATICO/Drenaje Linfatico.png",
-            "images/DRENAJE LINFATICO/IMAGEN DRENAJE LINFATICO 1.png",
-            "images/DRENAJE LINFATICO/IMAGEN DRENAJE LINFATICO 2.png",
-            "images/DRENAJE LINFATICO/IMAGEN DRENAJE LINFATICO 3.png",
+            "images/DRENAJE LINFATICO/DRENAJE 1.png",
+            "images/DRENAJE LINFATICO/DRENAJE 2.png",
+            "images/DRENAJE LINFATICO/DRENAJE 3.png",
           ],
           features: [
             "Fórmula 100% natural con extractos herbales de alta calidad",
@@ -1360,53 +1519,6 @@
           waLink:
             "https://wa.me/573153491007?text=M%C3%A1s%20informaci%C3%B3n%20sobre%20Lymphatic%20Drainage%20Drenaje%20Linfatico",
         },
-        {
-          id: "kit46",
-          name: "Kit herramientas 46 piezas",
-          tag: "Maletín profesional multiuso",
-          price: "$89.900",
-          oldPrice: "$120.000",
-          gift: null,
-          images: [
-            "images/KIT HERRAMIENTAS/1.jpg",
-            "images/KIT HERRAMIENTAS/2.jpeg",
-            "images/KIT HERRAMIENTAS/3.jpeg",
-          ],
-          features: [
-            "Resistente y duradero: hecho para rendir siempre",
-            "46 piezas completas y versátiles, todo organizado en su lugar",
-            "Ideal para autos, motos, hogar y taller",
-            "Fácil de usar, para profesionales y principiantes",
-            "Maletín resistente y portátil · Envío contraentrega",
-          ],
-          keyword: "KIT46",
-          waLink:
-            "https://wa.me/573153491007?text=M%C3%A1s%20informaci%C3%B3n%20sobre%20Kit%20herramientas%2046%20piezas",
-        },
-        {
-          id: "carotone",
-          name: "CAROTONE 300 ML + REGALO",
-          tag: "Light & Natural · Fórmula 3 en 1",
-          price: "$91.900",
-          oldPrice: "$115.000",
-          gift: "+ REGALO",
-          images: [
-            "images/CAROTONE/Carotone.png",
-            "images/CAROTONE/CAROTONE IMAGEN 1.png",
-            "images/CAROTONE/CAROTONE IMAGEN 2.png",
-            "images/CAROTONE/CAROTONE IMAGEN 3.png",
-          ],
-          features: [
-            "Fórmula 3 en 1: aclara, hidrata y protege en un solo producto",
-            "Colágeno + DSP 10: repara y mejora la elasticidad de la piel",
-            "Sun Protection: protege de los rayos UV y previene manchas",
-            "Ayuda a unificar el tono de la piel de forma natural",
-            "Resultados visibles desde las primeras semanas",
-          ],
-          keyword: "CAROTONE",
-          waLink:
-            "https://wa.me/573153491007?text=M%C3%A1s%20informaci%C3%B3n%20sobre%20CAROTONE%20300%20ML%20%2B%20REGALO",
-        },
       ];
 
       /* =========================================================
@@ -1414,8 +1526,95 @@
 ========================================================= */
       const grid = document.getElementById("catalog-grid");
 
+      function formatCOP(n) {
+        return "$" + Math.round(n).toLocaleString("es-CO");
+      }
+
+      function selectedVariant(p) {
+        if (!p.variants) return null;
+        if (p._selectedIdx === undefined)
+          p._selectedIdx = p.defaultVariantIdx || 0;
+        return p.variants[p._selectedIdx];
+      }
+
       function buildWaLink(p) {
+        if (p.variants) {
+          const v = selectedVariant(p);
+          const text = `Hola Zenvora, quiero pedir ${p.name} (${v.label}) por ${formatCOP(v.totalPrice)}`;
+          return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+        }
         return p.waLink;
+      }
+
+      function buildPillsHTML(p, pIndex) {
+        if (!p.variants) return "";
+        const idx = p._selectedIdx || p.defaultVariantIdx || 0;
+        const pills = p.variants
+          .map(
+            (v, vi) => `
+          <button type="button" class="qty-pill${vi === idx ? " active" : ""}" onclick="selectVariant(${pIndex}, ${vi})">
+            ${v.badge ? `<span class="qty-pill-badge">${v.badge}</span>` : ""}
+            <span class="qty-pill-label">${v.label}</span>
+            <span class="qty-pill-price">${formatCOP(v.totalPrice)}</span>
+          </button>`,
+          )
+          .join("");
+        return `<div class="qty-pills" id="qty-pills-${pIndex}">${pills}</div>`;
+      }
+
+      function priceSectionHTML(p, pIndex) {
+        if (p.variants) {
+          const v = selectedVariant(p);
+          return `
+      <div class="price-row" id="price-row-${pIndex}">
+        <span class="price-now" id="price-now-${pIndex}">${formatCOP(v.totalPrice)}</span>
+        ${v.oldTotal ? `<span class="price-old" id="price-old-${pIndex}">${formatCOP(v.oldTotal)}</span>` : ""}
+      </div>
+      <div class="unit-price" id="unit-price-${pIndex}">${formatCOP(v.totalPrice / v.qty)} c/u</div>
+      ${buildPillsHTML(p, pIndex)}
+    `;
+        }
+        return `
+      <div class="price-row">
+        <span class="price-now">${p.price}</span>
+        ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ""}
+      </div>
+    `;
+      }
+
+      function selectVariant(pIndex, vIndex) {
+        const p = products[pIndex];
+        p._selectedIdx = vIndex;
+        const v = p.variants[vIndex];
+
+        const priceNow = document.getElementById(`price-now-${pIndex}`);
+        if (priceNow) priceNow.textContent = formatCOP(v.totalPrice);
+
+        const priceRow = document.getElementById(`price-row-${pIndex}`);
+        const priceOldEl = document.getElementById(`price-old-${pIndex}`);
+        if (v.oldTotal) {
+          if (priceOldEl) {
+            priceOldEl.textContent = formatCOP(v.oldTotal);
+          } else if (priceRow) {
+            priceRow.insertAdjacentHTML(
+              "beforeend",
+              `<span class="price-old" id="price-old-${pIndex}">${formatCOP(v.oldTotal)}</span>`,
+            );
+          }
+        } else if (priceOldEl) {
+          priceOldEl.remove();
+        }
+
+        const unitEl = document.getElementById(`unit-price-${pIndex}`);
+        if (unitEl)
+          unitEl.textContent = `${formatCOP(v.totalPrice / v.qty)} c/u`;
+
+        document
+          .querySelectorAll(`#qty-pills-${pIndex} .qty-pill`)
+          .forEach((btn, i) => btn.classList.toggle("active", i === vIndex));
+
+        const waBtn = document.getElementById(`wa-btn-${pIndex}`);
+        if (waBtn) waBtn.href = buildWaLink(p);
       }
 
       products.forEach((p, pIndex) => {
@@ -1435,6 +1634,7 @@
         card.innerHTML = `
     <div class="carousel" data-product="${pIndex}">
       ${p.gift ? `<span class="badge-gift">${p.gift}</span>` : ""}
+      ${p.bestSeller ? `<span class="badge-best">🔥 MÁS VENDIDO</span>` : ""}
       <div class="carousel-track">${imgs}</div>
       <button class="car-btn car-prev" aria-label="Anterior">‹</button>
       <button class="car-btn car-next" aria-label="Siguiente">›</button>
@@ -1443,14 +1643,11 @@
     <div class="card-body">
       <span class="card-tag">${p.tag}</span>
       <h3>${p.name}</h3>
-      <div class="price-row">
-        <span class="price-now">${p.price}</span>
-        ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ""}
-      </div>
+      ${priceSectionHTML(p, pIndex)}
       <div class="card-actions">
         <div class="row2">
           <button class="btn btn-outline btn-sm" onclick="openModal(${pIndex})">Más información</button>
-          <a class="btn btn-whatsapp btn-sm" href="${buildWaLink(p)}" target="_blank" rel="noopener">Comprar</a>
+          <a id="wa-btn-${pIndex}" class="btn btn-whatsapp btn-sm" href="${buildWaLink(p)}" target="_blank" rel="noopener">Comprar</a>
         </div>
         <div class="row3">
           <button class="btn btn-pay btn-sm btn-block" onclick="openPayModal(${pIndex})">💳 Pagar ahora</button>
@@ -1526,12 +1723,45 @@
         document.getElementById("modalImg").src = p.images[0];
         document.getElementById("modalImg").alt = p.name;
         document.getElementById("modalTitle").textContent = p.name;
-        document.getElementById("modalPrice").textContent =
-          p.price + (p.oldPrice ? "  " : "");
+
+        const oldEl = document.getElementById("modalOldPrice");
+        const unitEl = document.getElementById("modalUnitPrice");
+        const pillsEl = document.getElementById("modalPills");
+
+        if (p.variants) {
+          const v = selectedVariant(p);
+          document.getElementById("modalPrice").textContent = formatCOP(
+            v.totalPrice,
+          );
+          if (v.oldTotal) {
+            oldEl.textContent = formatCOP(v.oldTotal);
+            oldEl.style.display = "";
+          } else {
+            oldEl.style.display = "none";
+          }
+          unitEl.textContent = `${formatCOP(v.totalPrice / v.qty)} c/u`;
+          unitEl.style.display = "";
+          pillsEl.innerHTML = buildPillsHTML(p, i).replace(
+            /selectVariant\((\d+),/g,
+            "selectModalVariant($1,",
+          );
+        } else {
+          document.getElementById("modalPrice").textContent =
+            p.price + (p.oldPrice ? "  " : "");
+          oldEl.style.display = "none";
+          unitEl.style.display = "none";
+          pillsEl.innerHTML = "";
+        }
+
         const feat = document.getElementById("modalFeatures");
         feat.innerHTML = p.features.map((f) => `<li>${f}</li>`).join("");
         document.getElementById("modalWhatsapp").href = buildWaLink(p);
         overlay.classList.add("open");
+      }
+
+      function selectModalVariant(pIndex, vIndex) {
+        selectVariant(pIndex, vIndex);
+        openModal(pIndex);
       }
       function closeModal() {
         overlay.classList.remove("open");
@@ -1567,8 +1797,17 @@
         const p = products[i];
         document.getElementById("payImg").src = p.images[0];
         document.getElementById("payImg").alt = p.name;
-        document.getElementById("payName").textContent = p.name;
-        document.getElementById("payPrice").textContent = p.price;
+        if (p.variants) {
+          const v = selectedVariant(p);
+          document.getElementById("payName").textContent =
+            `${p.name} — ${v.label}`;
+          document.getElementById("payPrice").textContent = formatCOP(
+            v.totalPrice,
+          );
+        } else {
+          document.getElementById("payName").textContent = p.name;
+          document.getElementById("payPrice").textContent = p.price;
+        }
         document.getElementById("payModalOverlay").classList.add("open");
       }
       function closePayModal() {
@@ -1588,10 +1827,12 @@
           );
           return;
         }
+        const v = p.variants ? selectedVariant(p) : null;
+        const amountInCents = v ? v.totalPrice * 100 : priceToCents(p.price);
         const reference = `ZEN-${p.id}-${Date.now()}`;
         const checkout = new WidgetCheckout({
           currency: "COP",
-          amountInCents: priceToCents(p.price),
+          amountInCents: amountInCents,
           reference: reference,
           publicKey: WOMPI_PUBLIC_KEY,
         });
@@ -1601,6 +1842,8 @@
             closePayModal();
             lastOrder = {
               product: p,
+              variantLabel: v ? v.label : null,
+              variantQty: v ? v.qty : null,
               reference: reference,
               transactionId: tx.id,
             };
@@ -1648,8 +1891,21 @@
         const status = document.getElementById("shipStatus");
         const order = {
           fecha: new Date().toLocaleString("es-CO"),
-          producto: lastOrder ? lastOrder.product.name : "N/D",
-          precio: lastOrder ? lastOrder.product.price : "N/D",
+          producto: lastOrder
+            ? lastOrder.product.name +
+              (lastOrder.variantLabel ? ` (${lastOrder.variantLabel})` : "")
+            : "N/D",
+          cantidad:
+            lastOrder && lastOrder.variantQty ? lastOrder.variantQty : 1,
+          precio: lastOrder
+            ? lastOrder.product.variants
+              ? formatCOP(
+                  lastOrder.product.variants.find(
+                    (v) => v.label === lastOrder.variantLabel,
+                  )?.totalPrice || 0,
+                )
+              : lastOrder.product.price
+            : "N/D",
           referencia: lastOrder ? lastOrder.reference : "N/D",
           transaccionWompi: lastOrder ? lastOrder.transactionId : "N/D",
           nombre: document.getElementById("shipName").value,
